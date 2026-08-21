@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin Dashboard — Sankalp Laminates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ NEOMORPHIC LIGHT SAND DESIGN SYSTEM ============ */
+:root {
+  --bg: #e6e1da;
+  --bg-rgb: 230, 225, 218;
+  --shadow-dark: #baaf9f;
+  --shadow-light: #ffffff;
+  
+  --ink: #241a14;
+  --ink-soft: #4a3c31;
+  --brass: #b88539;
+  --brass-light: #dfb164;
+  --brass-dim: #8f6728;
+  --brass-glow: rgba(184, 133, 57, 0.25);
+  --taupe: #7e7265;
+  --charcoal: #2b241f;
+  --danger: #b83939;
+  --success: #2e7d32;
+
+  --line-subtle: rgba(186, 175, 159, 0.3);
+  
+  --neo-flat: 10px 10px 24px var(--shadow-dark), -10px -10px 24px var(--shadow-light);
+  --neo-raised: 14px 14px 32px var(--shadow-dark), -14px -14px 32px var(--shadow-light);
+  --neo-sm: 5px 5px 12px var(--shadow-dark), -5px -5px 12px var(--shadow-light);
+  --neo-xs: 3px 3px 8px var(--shadow-dark), -3px -3px 8px var(--shadow-light);
+  --neo-inset: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+  --neo-inset-deep: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
+  --neo-pressed: inset 3px 3px 7px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);
+  
+  --r-s: 10px;
+  --r-m: 20px;
+  --r-l: 32px;
+  --r-pill: 9999px;
+  
+  --ff-display: 'Fraunces', ui-serif, Georgia, serif;
+  --ff-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --ff-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --container: 1320px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--ff-body);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
+input, select, textarea { font: inherit; }
+.container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+
+/* ============ NEOMORPHIC UI COMPONENTS ============ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--ff-body); font-weight: 700; font-size: 13.5px;
+  padding: 12px 24px; border-radius: var(--r-pill);
+  background: var(--bg); color: var(--ink);
+  box-shadow: var(--neo-sm);
+  transition: all .3s var(--ease); border: 1px solid rgba(255,255,255,0.15);
+  user-select: none;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--neo-raised); color: var(--brass); }
+.btn:active, .btn.is-pressed { transform: translateY(1px); box-shadow: var(--neo-pressed); }
+
+.btn-brass {
+  background: linear-gradient(145deg, var(--brass-light), var(--brass));
+  color: #fff; border: none;
+  box-shadow: 5px 5px 14px var(--shadow-dark), -5px -5px 14px var(--shadow-light);
+}
+.btn-brass:hover { color: #fff; box-shadow: 7px 7px 20px var(--shadow-dark), -7px -7px 20px var(--shadow-light); }
+
+.btn-danger {
+  color: var(--danger);
+  box-shadow: var(--neo-xs);
+}
+.btn-danger:hover { background: var(--danger); color: #fff; }
+
+.btn-sm { padding: 8px 16px; font-size: 12.5px; }
+
+/* ============ HEADER NAV ============ */
+.admin-header {
+  position: sticky; top: 0; z-index: 100; padding: 18px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-subtle);
+  transition: all .4s var(--ease);
+}
+.admin-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.admin-brand { display: flex; align-items: center; gap: 12px; }
+.admin-mark {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--bg);
+  box-shadow: var(--neo-inset); color: var(--brass); font-family: var(--ff-mono);
+  font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center;
+}
+.admin-title { font-family: var(--ff-display); font-size: 20px; color: var(--ink); }
+.admin-title span { display: block; font-family: var(--ff-mono); font-size: 9.5px; text-transform: uppercase; color: var(--taupe); letter-spacing: .2em; }
+
+.admin-nav-actions { display: flex; align-items: center; gap: 14px; }
+
+/* ============ DASHBOARD LAYOUT & TABS ============ */
+.dashboard-layout { padding: 36px 0 60px; }
+.tab-bar {
+  display: flex; gap: 12px; margin-bottom: 36px; overflow-x: auto; padding-bottom: 8px;
+}
+.tab-btn {
+  padding: 14px 26px; border-radius: var(--r-pill); font-weight: 700; font-size: 14px;
+  color: var(--ink-soft); background: var(--bg); box-shadow: var(--neo-sm);
+  transition: all .3s var(--ease); white-space: nowrap; display: flex; align-items: center; gap: 10px;
+}
+.tab-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tab-btn:hover { color: var(--brass); box-shadow: var(--neo-raised); transform: translateY(-2px); }
+.tab-btn.is-active { box-shadow: var(--neo-pressed); color: var(--brass); background: var(--bg); }
+
+.tab-pane { display: none; }
+.tab-pane.is-active { display: block; }
+
+/* ============ STAT PODS ============ */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 36px; }
+.stat-card {
+  background: var(--bg); border-radius: var(--r-m); box-shadow: var(--neo-flat);
+  padding: 24px 20px; display: flex; align-items: center; gap: 20px;
+  transition: transform .3s var(--ease);
+}
+.stat-card:hover { transform: translateY(-4px); }
+.stat-icon {
+  width: 54px; height: 54px; border-radius: 50%; background: var(--bg);
+  box-shadow: var(--neo-inset); color: var(--brass); display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.stat-icon svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; }
+.stat-info { display: flex; flex-direction: column; gap: 2px; }
+.stat-num { font-family: var(--ff-display); font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1; }
+.stat-label { font-size: 13px; color: var(--taupe); font-weight: 500; }
+
+@media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+
+/* ============ ADMIN CARDS & TABLES ============ */
+.admin-card {
+  background: var(--bg); border-radius: var(--r-l); box-shadow: var(--neo-flat);
+  padding: clamp(24px, 4vw, 36px); margin-bottom: 36px; border: 1px solid rgba(255,255,255,0.15);
+}
+.admin-card-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.admin-card-head h2 { font-family: var(--ff-display); font-size: 24px; font-weight: 400; color: var(--ink); }
+
+.table-wrapper { overflow-x: auto; border-radius: var(--r-m); box-shadow: var(--neo-inset); padding: 6px; background: var(--bg); }
+.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+.data-table th {
+  font-family: var(--ff-mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--brass-dim); padding: 16px 18px; border-bottom: 1px solid var(--line-subtle);
+}
+.data-table td { padding: 16px 18px; border-bottom: 1px solid var(--line-subtle); color: var(--ink-soft); vertical-align: middle; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { color: var(--ink); background: rgba(0,0,0,0.02); }
+
+.swatch-mini-preview { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: var(--neo-sm); }
+
+.badge-status {
+  font-family: var(--ff-mono); font-size: 11px; padding: 4px 12px; border-radius: var(--r-pill);
+  display: inline-block; font-weight: 600;
+}
+.badge-status.new { background: var(--brass-glow); color: var(--brass); border: 1px solid var(--brass); }
+.badge-status.contacted { background: rgba(46, 125, 50, 0.15); color: var(--success); }
+
+/* ============ FORM FIELDS & MODAL ============ */
+.admin-form { display: flex; flex-direction: column; gap: 20px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-family: var(--ff-mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--brass-dim); font-weight: 600; }
+.field input, .field select, .field textarea {
+  background: var(--bg); box-shadow: var(--neo-inset); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--r-s); padding: 12px 16px; color: var(--ink); font-size: 14px;
+  outline: none; transition: all .3s var(--ease);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light), 0 0 0 2px var(--brass-glow);
+}
+@media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
+
+.modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; visibility: hidden; opacity: 0; transition: all .4s var(--ease); }
+.modal.is-open { visibility: visible; opacity: 1; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); }
+.modal-panel {
+  position: relative; background: var(--bg); border-radius: var(--r-l); box-shadow: var(--neo-raised);
+  max-width: 680px; width: 100%; padding: 36px; border: 1px solid rgba(255,255,255,0.2);
+  transform: translateY(20px); transition: transform .4s var(--ease); max-height: 90vh; overflow-y: auto;
+}
+.modal.is-open .modal-panel { transform: translateY(0); }
+.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.modal-head h3 { font-family: var(--ff-display); font-size: 24px; color: var(--ink); }
+.modal-close { font-size: 24px; color: var(--taupe); }
+.modal-close:hover { color: var(--brass); }
+</style>
+</head>
+<body>
+
+<header class="admin-header">
+  <div class="container admin-header-inner">
+    <div class="admin-brand">
+      <div class="admin-mark">SL</div>
+      <div class="admin-title">Sankalp Laminates <span>Admin Portal &amp; Control</span></div>
+    </div>
+    <div class="admin-nav-actions">
+      <a href="index.html" class="btn btn-sm">View Website &rarr;</a>
+    </div>
+  </div>
+</header>
+
+<main class="dashboard-layout">
+  <div class="container">
+    
+    <!-- Tab Controls -->
+    <div class="tab-bar">
+      <button class="tab-btn is-active" data-tab="dashboard">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+      <button class="tab-btn" data-tab="swatches">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 000 20z"/></svg>
+        Catalogue Swatches
+      </button>
+      <button class="tab-btn" data-tab="collections">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        Collections
+      </button>
+      <button class="tab-btn" data-tab="enquiries">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Enquiries &amp; Leads
+      </button>
+      <button class="tab-btn" data-tab="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Website Settings
+      </button>
+    </div>
+
+    <!-- TAB 1: DASHBOARD OVERVIEW -->
+    <div class="tab-pane is-active" id="pane-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statTotalSwatches">0</span>
+            <span class="stat-label">Total Catalogue Swatches</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statCollections">4</span>
+            <span class="stat-label">Main Collections</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statEnquiries">0</span>
+            <span class="stat-label">Pending Enquiries</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="stat-info">
+            <span class="stat-num" style="font-size:24px; color:var(--success);">Active</span>
+            <span class="stat-label">Showroom Status</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-head">
+          <h2>Recent Enquiries &amp; Sample Requests</h2>
+          <button class="btn btn-sm" onclick="switchTab('enquiries')">View All Leads</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Client Name</th>
+                <th>Phone</th>
+                <th>Finish Interest</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dashEnquiryTable">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: SWATCHES CRUD -->
+    <div class="tab-pane" id="pane-swatches">
+      <div class="admin-card">
+        <div class="admin-card-head">
+          <div>
+            <h2>Catalogue Swatches</h2>
+            <p style="font-size:13.5px; color:var(--taupe); margin-top:4px;">Manage all laminate finishes shown on the live website.</p>
+          </div>
+          <button class="btn btn-brass" id="btnAddSwatch">+ Add New Swatch</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Preview</th>
+                <th>Code</th>
+                <th>Finish Name</th>
+                <th>Category</th>
+                <th>Primary Hex</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="swatchTable">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: COLLECTIONS -->
+    <div class="tab-pane" id="pane-collections">
+      <div class="admin-card">
+        <div class="admin-card-head">
+          <h2>Main Product Collections</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Collection Code</th>
+                <th>Title</th>
+                <th>Tagline</th>
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>01</td><td><strong>Wood Grain</strong></td><td>The warmth of real timber, without the upkeep.</td><td id="cnt-wood">0</td></tr>
+              <tr><td>02</td><td><strong>Stone &amp; Marble</strong></td><td>Quarried looks, zero maintenance.</td><td id="cnt-stone">0</td></tr>
+              <tr><td>03</td><td><strong>Gloss &amp; Solids</strong></td><td>Mirror finishes for modern spaces.</td><td id="cnt-gloss">0</td></tr>
+              <tr><td>04</td><td><strong>Matte &amp; Textured</strong></td><td>Soft to the eye, tough to the touch.</td><td id="cnt-matte">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: ENQUIRIES -->
+    <div class="tab-pane" id="pane-enquiries">
+      <div class="admin-card">
+        <div class="admin-card-head">
+          <h2>Enquiries Lead Tracker</h2>
+          <button class="btn btn-sm btn-danger" id="btnClearEnquiries">Clear All Leads</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Finish</th>
+                <th>Details</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="enquiryTable">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: WEBSITE SETTINGS -->
+    <div class="tab-pane" id="pane-settings">
+      <div class="admin-card">
+        <div class="admin-card-head">
+          <h2>Website Content &amp; Contact Settings</h2>
+        </div>
+        <form class="admin-form" id="settingsForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="setHeroTitle">Hero Headline</label>
+              <textarea id="setHeroTitle" rows="2"></textarea>
+            </div>
+            <div class="field">
+              <label for="setHeroLede">Hero Subtitle Lede</label>
+              <textarea id="setHeroLede" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="setAddress">Showroom Address</label>
+              <textarea id="setAddress" rows="3"></textarea>
+            </div>
+            <div class="field">
+              <label for="setHours">Opening Hours</label>
+              <input id="setHours" type="text">
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="setPhone">Phone Number</label>
+              <input id="setPhone" type="text">
+            </div>
+            <div class="field">
+              <label for="setWA">WhatsApp Number</label>
+              <input id="setWA" type="text">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-brass" style="align-self:flex-start;">Save Website Changes</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ============ MODAL: ADD / EDIT SWATCH ============ -->
+<div class="modal" id="swatchModal">
+  <div class="modal-backdrop" id="modalClose"></div>
+  <div class="modal-panel">
+    <div class="modal-head">
+      <h3 id="modalTitle">Add New Swatch</h3>
+      <button class="modal-close" id="modalCloseX">&times;</button>
+    </div>
+    <form class="admin-form" id="swatchForm">
+      <input type="hidden" id="swatchEditIdx" value="-1">
+      <div class="form-grid">
+        <div class="field">
+          <label for="swCode">Swatch Code (e.g. SL 214 GTK)</label>
+          <input id="swCode" type="text" required>
+        </div>
+        <div class="field">
+          <label for="swName">Finish Name</label>
+          <input id="swName" type="text" required>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="swCat">Category</label>
+          <select id="swCat" required>
+            <option value="wood">Wood Grain</option>
+            <option value="stone">Stone &amp; Marble</option>
+            <option value="gloss">Gloss &amp; Solids</option>
+            <option value="matte">Matte &amp; Textured</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="swC1">Primary Base Color (Hex)</label>
+          <input id="swC1" type="color" value="#8a5a34">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="swC2">Secondary Grain Color (Hex)</label>
+          <input id="swC2" type="color" value="#5c3a20">
+        </div>
+        <div class="field">
+          <label for="swC3">Highlight Accent Color (Hex)</label>
+          <input id="swC3" type="color" value="#ab7a4c">
+        </div>
+      </div>
+      <div class="field">
+        <label for="swDesc">Finish Description</label>
+        <textarea id="swDesc" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-brass" style="margin-top:10px;">Save Swatch</button>
+    </form>
+  </div>
+</div>
+
+<script>
+localStorage.setItem('sankalp-theme', 'light');
+
+/* Tabs */
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('is-active', b.dataset.tab === tabId));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('is-active', p.id === `pane-${tabId}`));
+}
+document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+/* Data Defaults */
+const DEFAULT_SWATCHES = [
+  {code:'SL 214 GTK', name:'Golden Teak', cat:'wood', catLabel:'Wood Grain', c1:'#8a5a34', c2:'#5c3a20', c3:'#ab7a4c', desc:'Warm, honey-toned teak grain with soft golden undertones.'},
+  {code:'SL 118 WLN', name:'Aged Walnut', cat:'wood', catLabel:'Wood Grain', c1:'#4a2e1e', c2:'#2c1a10', c3:'#6b4529', desc:'A deep, fine-grained walnut with chocolate undertones.'},
+  {code:'SL 306 RKO', name:'Rustic Oak', cat:'wood', catLabel:'Wood Grain', c1:'#a3825f', c2:'#7a5c3d', c3:'#c2a077', desc:'Coarse, sun-bleached oak grain with visible texture.'},
+  {code:'SL 402 CRR', name:'Carrara Mist', cat:'stone', catLabel:'Stone & Marble', c1:'#e7e2d8', c2:'#c9c2b3', c3:'#f5f2ea', desc:'A soft white-grey marble finish with faint veining.'},
+  {code:'SL 415 ONX', name:'Black Onyx', cat:'stone', catLabel:'Stone & Marble', c1:'#181513', c2:'#0c0a09', c3:'#332a24', desc:'Dramatic near-black marble with warm, ember-toned veining.'},
+  {code:'SL 388 SST', name:'Sahara Sandstone', cat:'stone', catLabel:'Stone & Marble', c1:'#cbb28c', c2:'#a88a63', c3:'#e2cba3', desc:'Warm, mottled sandstone tones.'},
+  {code:'SL 991 HG', name:'Ivory Gloss', cat:'gloss', catLabel:'Gloss & Solids', c1:'#efe8d8', c2:'#d8cbaa', desc:'A mirror-polish ivory finish.'},
+  {code:'SL 993 HG', name:'Charcoal Gloss', cat:'gloss', catLabel:'Gloss & Solids', c1:'#2a2724', c2:'#0f0d0b', desc:'Deep charcoal with a mirror finish.'},
+  {code:'SL 907 HG', name:'Wine Gloss', cat:'gloss', catLabel:'Gloss & Solids', c1:'#5c1f24', c2:'#2e0f13', desc:'A rich burgundy high-gloss finish.'},
+  {code:'SL 512 MS', name:'Concrete Matte', cat:'matte', catLabel:'Matte & Textured', c1:'#a6a29a', c2:'#7d7972', desc:'A soft-touch concrete-effect matte.'},
+  {code:'SL 540 MS', name:'Slate Textura', cat:'matte', catLabel:'Matte & Textured', c1:'#4d5457', c2:'#2c3133', desc:'A deep blue-grey textured matte.'},
+  {code:'SL 501 MS', name:'Snow Matte', cat:'matte', catLabel:'Matte & Textured', c1:'#f2efe7', c2:'#dcd7c9', desc:'A soft off-white matte.'},
+];
+
+let swatches = JSON.parse(localStorage.getItem('sankalp-swatches') || JSON.stringify(DEFAULT_SWATCHES));
+let enquiries = JSON.parse(localStorage.getItem('sankalp-enquiries') || '[]');
+let settings = JSON.parse(localStorage.getItem('sankalp-settings') || JSON.stringify({
+  heroTitle: "Surfaces worth\na second touch",
+  heroLede: "For over two decades, Sankalp Laminates has fitted Vadodara's homes and studios with décor surfaces that look expensive and behave better.",
+  address: "Sankalp Laminates\nMilan, 1, Dharmsinh Road,\nChhani Jakat Naka Road, Vadodara 390024",
+  hours: "Mon – Sat · 9:30 AM – 7:30 PM",
+  phone: "+91 98765 43210",
+  whatsapp: "+91 98765 43210"
+}));
+
+/* Save Helpers */
+function saveSwatches() { localStorage.setItem('sankalp-swatches', JSON.stringify(swatches)); renderAll(); }
+function saveEnquiries() { localStorage.setItem('sankalp-enquiries', JSON.stringify(enquiries)); renderAll(); }
+
+/* Render All Views */
+function renderAll() {
+  // Stats
+  document.getElementById('statTotalSwatches').textContent = swatches.length;
+  document.getElementById('statEnquiries').textContent = enquiries.filter(e => e.status === 'New').length;
+
+  // Collection counts
+  ['wood','stone','gloss','matte'].forEach(cat => {
+    const el = document.getElementById(`cnt-${cat}`);
+    if(el) el.textContent = swatches.filter(s => s.cat === cat).length;
+  });
+
+  // Swatch table
+  const sTable = document.getElementById('swatchTable');
+  sTable.innerHTML = swatches.map((s, idx) => `
+    <tr>
+      <td><div class="swatch-mini-preview" style="background:${s.c1}"></div></td>
+      <td><strong>${s.code}</strong></td>
+      <td>${s.name}</td>
+      <td>${s.catLabel || s.cat}</td>
+      <td><code style="font-family:var(--ff-mono);">${s.c1}</code></td>
+      <td>
+        <button class="btn btn-sm" onclick="editSwatch(${idx})">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteSwatch(${idx})">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+
+  // Dashboard enquiries table
+  const dashTable = document.getElementById('dashEnquiryTable');
+  if(enquiries.length === 0) {
+    dashTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--taupe);">No enquiries received yet.</td></tr>`;
+  } else {
+    dashTable.innerHTML = enquiries.slice(0, 5).map(e => `
+      <tr>
+        <td>${e.date}</td>
+        <td><strong>${e.name}</strong></td>
+        <td>${e.phone}</td>
+        <td>${e.finish}</td>
+        <td><span class="badge-status ${e.status === 'New' ? 'new' : 'contacted'}">${e.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  // Enquiries tracker table
+  const eTable = document.getElementById('enquiryTable');
+  if(enquiries.length === 0) {
+    eTable.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--taupe);">No enquiries registered yet.</td></tr>`;
+  } else {
+    eTable.innerHTML = enquiries.map((e, idx) => `
+      <tr>
+        <td>${e.date}</td>
+        <td><strong>${e.name}</strong></td>
+        <td><a href="tel:${e.phone}" style="color:var(--brass); text-decoration:underline;">${e.phone}</a></td>
+        <td>${e.finish}</td>
+        <td style="max-width:240px;">${e.message || '—'}</td>
+        <td>
+          <select onchange="updateEnquiryStatus(${idx}, this.value)" style="padding:6px 12px; border-radius:12px;">
+            <option ${e.status === 'New' ? 'selected' : ''}>New</option>
+            <option ${e.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+            <option ${e.status === 'Sample Sent' ? 'selected' : ''}>Sample Sent</option>
+            <option ${e.status === 'Completed' ? 'selected' : ''}>Completed</option>
+          </select>
+        </td>
+        <td><button class="btn btn-sm btn-danger" onclick="deleteEnquiry(${idx})">Delete</button></td>
+      </tr>
+    `).join('');
+  }
+}
+
+/* Swatch CRUD */
+const modal = document.getElementById('swatchModal');
+const swatchForm = document.getElementById('swatchForm');
+
+document.getElementById('btnAddSwatch').addEventListener('click', () => {
+  document.getElementById('swatchEditIdx').value = -1;
+  document.getElementById('modalTitle').textContent = 'Add New Swatch';
+  swatchForm.reset();
+  modal.classList.add('is-open');
+});
+
+function editSwatch(idx) {
+  const s = swatches[idx];
+  document.getElementById('swatchEditIdx').value = idx;
+  document.getElementById('modalTitle').textContent = `Edit Swatch ${s.code}`;
+  document.getElementById('swCode').value = s.code;
+  document.getElementById('swName').value = s.name;
+  document.getElementById('swCat').value = s.cat;
+  document.getElementById('swC1').value = s.c1;
+  document.getElementById('swC2').value = s.c2;
+  document.getElementById('swC3').value = s.c3 || s.c2;
+  document.getElementById('swDesc').value = s.desc;
+  modal.classList.add('is-open');
+}
+
+function deleteSwatch(idx) {
+  if(confirm(`Delete swatch ${swatches[idx].code}?`)) {
+    swatches.splice(idx, 1);
+    saveSwatches();
+  }
+}
+
+swatchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const idx = parseInt(document.getElementById('swatchEditIdx').value);
+  const catSel = document.getElementById('swCat');
+  const catLabel = catSel.options[catSel.selectedIndex].text;
+
+  const item = {
+    code: document.getElementById('swCode').value.trim(),
+    name: document.getElementById('swName').value.trim(),
+    cat: catSel.value,
+    catLabel: catLabel,
+    c1: document.getElementById('swC1').value,
+    c2: document.getElementById('swC2').value,
+    c3: document.getElementById('swC3').value,
+    desc: document.getElementById('swDesc').value.trim()
+  };
+
+  if(idx === -1) swatches.unshift(item);
+  else swatches[idx] = item;
+
+  modal.classList.remove('is-open');
+  saveSwatches();
+});
+
+document.getElementById('modalClose').addEventListener('click', () => modal.classList.remove('is-open'));
+document.getElementById('modalCloseX').addEventListener('click', () => modal.classList.remove('is-open'));
+
+/* Enquiry Actions */
+function updateEnquiryStatus(idx, status) {
+  enquiries[idx].status = status;
+  saveEnquiries();
+}
+function deleteEnquiry(idx) {
+  enquiries.splice(idx, 1);
+  saveEnquiries();
+}
+document.getElementById('btnClearEnquiries').addEventListener('click', () => {
+  if(confirm('Clear all enquiry leads?')) { enquiries = []; saveEnquiries(); }
+});
+
+/* Settings Form */
+const setForm = document.getElementById('settingsForm');
+document.getElementById('setHeroTitle').value = settings.heroTitle || '';
+document.getElementById('setHeroLede').value = settings.heroLede || '';
+document.getElementById('setAddress').value = settings.address || '';
+document.getElementById('setHours').value = settings.hours || '';
+document.getElementById('setPhone').value = settings.phone || '';
+document.getElementById('setWA').value = settings.whatsapp || '';
+
+setForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  settings = {
+    heroTitle: document.getElementById('setHeroTitle').value.trim(),
+    heroLede: document.getElementById('setHeroLede').value.trim(),
+    address: document.getElementById('setAddress').value.trim(),
+    hours: document.getElementById('setHours').value.trim(),
+    phone: document.getElementById('setPhone').value.trim(),
+    whatsapp: document.getElementById('setWA').value.trim()
+  };
+  localStorage.setItem('sankalp-settings', JSON.stringify(settings));
+  alert('Website settings updated successfully! View live website to see changes.');
+});
+
+renderAll();
+</script>
+</body>
+</html>
